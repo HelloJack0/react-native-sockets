@@ -244,11 +244,11 @@ public class SocketClient {
 //                    System.out.println("===client==readLen======" + readLen +"="+buffer[0]+"="+buffer[1]+"="+buffer[2]+"="+buffer[3]+"="+buffer[4]+"="+buffer[5]+"="+buffer[6]);
                 }else {
 
-                    System.out.println("===client==header======" + readLen + "==" + buffer[0] + "=" + buffer[1] + "==" + buffer[2]);
+//                    System.out.println("===client==header======" + readLen + "==" + buffer[0] + "=" + buffer[1] + "==" + buffer[2]);
                     if (((buffer[0] == 0x01) && (buffer[1] == 0x02) && (buffer[2] < 0x4F)) || ((buffer[0] == 0x01) && (buffer[1] == 0x01) && (buffer[2] == 0x02 || buffer[2] == 0x00 || buffer[2] == 0x10))) {
 
                         dataLen = byteToint(buffer, 3);
-                        System.out.println("==Super==dataLen=" + dataLen + "==" + buffer[0] + "=" + buffer[1] + "==" + buffer[2]);
+//                        System.out.println("==Super==dataLen=" + dataLen + "==" + buffer[0] + "=" + buffer[1] + "==" + buffer[2]);
                         receiveData = new byte[dataLen + 9];
                         System.arraycopy(buffer, 0, receiveData, 0, 7);
                         needDataLen = dataLen + 2;
@@ -261,12 +261,12 @@ public class SocketClient {
 
                         if (dataLen > 0) {
                             while (len < dataLen) {
-                                System.out.println("===SocketREV===" + receiveData[len] + "====" + receiveData[len + 1] + "==" + receiveData[len + 2] + "==" + len + "=datalen=" + dataLen);
+//                                System.out.println("===SocketREV===" + receiveData[len] + "====" + receiveData[len + 1] + "==" + receiveData[len + 2] + "==" + len + "=datalen=" + dataLen);
                                 if ((receiveData[len] == 0x01) && (receiveData[len + 1] == 0x02) && (receiveData[len + 2] < 0x4f)) {
                                     tmp = byteToint(receiveData, len + 3);
                                     ReSuperData = new byte[7 + tmp + 2];
                                     System.arraycopy(receiveData, len, ReSuperData, 0, ReSuperData.length);
-                                    System.out.println("=CRC=" + crc16(ReSuperData)[0] +"=="+crc16(ReSuperData)[1]+ "=readLen=" +ReSuperData[ReSuperData.length - 2]+"="+ReSuperData[ReSuperData.length - 1]);
+//                                    System.out.println("=CRC=" + crc16(ReSuperData)[0] +"=="+crc16(ReSuperData)[1]+ "=readLen=" +ReSuperData[ReSuperData.length - 2]+"="+ReSuperData[ReSuperData.length - 1]);
                                     if (crc16(ReSuperData)[0] == ReSuperData[ReSuperData.length - 2] && crc16(ReSuperData)[1] == ReSuperData[ReSuperData.length - 1]) {
 
                                         reValue = new String(ReSuperData, 7, tmp);
@@ -276,7 +276,7 @@ public class SocketClient {
                                         eventParams.putString("data", (reValue));
                                         eventParams.putInt("cmd", receiveData[len + 2]);
                                         sendEvent(mReactContext, event_data, eventParams);
-                                        System.out.println("===SocketREV CMD:==" + reValue + "==len=" + len + "=datalen=" + dataLen + "==readLen=" + readLen);
+//                                        System.out.println("===SocketREV CMD:==" + reValue + "==len=" + len + "=datalen=" + dataLen + "==readLen=" + readLen);
                                         readLen = 0;
                                         break;
                                     } else {
@@ -295,7 +295,7 @@ public class SocketClient {
                                     tmp = byteToint(receiveData, len + 3);
                                     ReSuperData = new byte[7 + tmp + 2];
                                     System.arraycopy(receiveData, len, ReSuperData, 0, ReSuperData.length);
-                                    System.out.println("=login=CRC=" + crc16(ReSuperData)[0] +"=="+crc16(ReSuperData)[1]+ "=readLen=" +ReSuperData[ReSuperData.length - 2]+"="+ReSuperData[ReSuperData.length - 1]);
+//                                    System.out.println("=login=CRC=" + crc16(ReSuperData)[0] +"=="+crc16(ReSuperData)[1]+ "=readLen=" +ReSuperData[ReSuperData.length - 2]+"="+ReSuperData[ReSuperData.length - 1]);
                                     if (crc16(ReSuperData)[0] == ReSuperData[ReSuperData.length - 2] && crc16(ReSuperData)[1] == ReSuperData[ReSuperData.length - 1]) {
 
                                         reValue = new String(ReSuperData, 7, tmp);
@@ -307,7 +307,7 @@ public class SocketClient {
                                         WritableMap eventParams = Arguments.createMap();
                                         eventParams.putInt("cmd", receiveData[len + 2]);
                                         sendEvent(mReactContext, event_connect, eventParams);
-                                        System.out.println("===SocketREV=login=:==" + reValue + "==len=" + len + "=datalen=" + dataLen + "==readLen=" + readLen);
+//                                        System.out.println("===SocketREV=login=:==" + reValue + "==len=" + len + "=datalen=" + dataLen + "==readLen=" + readLen);
 
                                         try {
                                             JSONObject jsonObject = new JSONObject();
