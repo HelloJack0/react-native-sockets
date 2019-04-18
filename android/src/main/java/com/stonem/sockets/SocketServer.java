@@ -387,4 +387,93 @@ public class SocketServer {
 
         return temdata;
     }
+ 
+    
+    
+/*
+
+public void write(String message, int cId) {
+        new AsyncTask<Object, Void, Void>() {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected Void doInBackground(Object... params) {
+                int cId = (int) params[0];
+                String message = (String) params[1];
+                Object socket = mClients.get(cId);
+                if (socket != null && socket instanceof Socket) {
+                    try {
+                        OutputStream outputStream = ((Socket) socket).getOutputStream();
+                        PrintStream printStream = new PrintStream(outputStream);
+                        printStream.print(message + (char) EOT);
+                        printStream.flush();
+                        outputStream.flush();
+
+                        Log.d(eTag, "server sent message: " + message);
+                    } catch (IOException e) {
+                        handleIOException(e);
+                    }
+                }
+                return null;
+            }
+
+            protected void onPostExecute(Void dummy) {
+            }
+        }.execute(cId, message);
+    }
+
+private class SocketServerReplyThread extends Thread {
+        private Socket hostThreadSocket;
+        private int cId;
+        private boolean clientConnected = true;
+
+        SocketServerReplyThread(Socket socket) {
+            hostThreadSocket = socket;
+            cId = hostThreadSocket.getPort();
+        }
+
+        @Override
+        public void run() {
+            try {
+                String data = "";
+                int p=0;
+                InputStream inputStream = hostThreadSocket.getInputStream();
+                while (isOpen && clientConnected) {
+                    int incomingByte = inputStream.read();
+
+                    if (incomingByte == -1) {
+                        clientConnected = false;
+                        //debug log
+                        Log.v(eTag, "Client disconnected");
+                        //emit event
+                        WritableMap eventParams = Arguments.createMap();
+                        eventParams.putInt("client", cId);
+                        sendEvent(mReactContext, event_clientDisconnect, eventParams);
+                    } else if (incomingByte == EOT) {
+
+                        //debug log
+                        Log.d(eTag, "client received message: " + data.length()+ "=="+data);
+                        //emit event
+                        WritableMap eventParams = Arguments.createMap();
+                        eventParams.putInt("client", cId);
+                        eventParams.putString("data", data);
+                        sendEvent(mReactContext, event_data, eventParams);
+                        //clear incoming
+                        data = "";
+                    } else {
+                        data += (char) incomingByte;
+                    }
+
+                }
+            } catch (IOException e) {
+                handleIOException(e);
+            }
+        }
+
+    }
+ */
+
 }
